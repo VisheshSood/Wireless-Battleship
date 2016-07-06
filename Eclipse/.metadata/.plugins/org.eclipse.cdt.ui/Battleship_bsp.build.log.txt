@@ -1,0 +1,6 @@
+22:49:49 **** Incremental Build of configuration Nios II for project Battleship_bsp ****
+make all 
+[BSP build complete]
+
+22:49:50 Build Finished (took 720ms)
+

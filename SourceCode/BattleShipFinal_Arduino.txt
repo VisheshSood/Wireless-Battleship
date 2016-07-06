@@ -1,0 +1,142 @@
+// Including necessary libraries
+#include <SPI.h>
+#include <Mirf.h>
+#include <nRF24L01.h>
+#include <MirfHardwareSpiDriver.h>
+
+
+uint8_t data[3];
+// Global Board Select Variable.
+// One board must be 1, other must not be 1
+int board = 0;
+char dump;
+
+
+void setup () {
+   // Set the Baud rate to match DE1
+   Serial.begin(9600);
+   Mirf.cePin = 9;
+   Mirf.csnPin = 10;
+   data[2] = '\0';
+  
+   // Mirf library commands for initialization
+   Mirf.spi = &MirfHardwareSpi;
+   Mirf.init();
+   if(board == 1) {
+      Mirf.setRADDR((byte *)"clie1");
+   } else {
+      Mirf.setRADDR((byte *)"serv1");
+   }
+  
+   Mirf.payload = sizeof(data);  
+   Mirf.config();
+   delay(50);
+   // Clear Arduino input serial buffer
+   clearSerial();
+}
+
+
+void loop() {
+   // Wait for either serial data or wireless data to enter the State machine
+   if(Serial.available() > 0) {
+      sendData();
+   } else if(Mirf.dataReady()) {
+      receiveData(); 
+   } 
+}
+
+void sendData() {
+   // Status LED to show state
+   digitalWrite( 4 , HIGH);
+      if(board == 1) {
+      Mirf.setTADDR((byte *)"serv1");
+   } else {
+      Mirf.setTADDR((byte *)"clie1");
+   }
+   
+   // Wait for three bytes of serial data and read them into the data array   
+   while(Serial.available() <= 0);
+   data[0] = Serial.read();
+   while(Serial.available() <= 0);
+   data[1] = Serial.read();   
+   while(Serial.available() <= 0);
+   data[2] = Serial.read();  
+    
+   // Clear any extra inputs from input buffer
+   clearSerial();
+   Mirf.send(data);
+   while(Mirf.isSending()) {
+      digitalWrite(4 , HIGH);
+   }  
+   delay(100);
+   digitalWrite(4 , LOW);
+   // Go to next state
+   receiveHitMiss();
+}
+
+void receiveData() {
+   digitalWrite(4 , LOW);
+   while(!Mirf.dataReady());
+   Mirf.getData(data);
+   delay(50);
+   Serial.write(data[0]);
+   // Delay for suspense to see whether the coordinate was a hit or not
+   delay(500);
+   Serial.write(data[1]);
+   delay(50);
+   Serial.write(data[2]);
+   delay(50);
+   // Go to next state
+   sendHitMiss(); 
+}
+
+
+void sendHitMiss() {
+   digitalWrite(4 , HIGH);
+   if(board == 1) {
+      Mirf.setTADDR((byte *)"serv1");
+   } else {
+      Mirf.setTADDR((byte *)"clie1");
+   }
+   
+   while(Serial.available() <= 0);
+   data[0] = Serial.read();
+   // Set Null terminator
+   data[1] = '\0';   
+
+   // Clear Arduino input serial buffer
+   clearSerial();
+
+   Mirf.send(data);
+   while(Mirf.isSending()) {
+      digitalWrite(4 , HIGH);
+   }  
+   digitalWrite( 4 , LOW);
+  
+   // Go to next state
+   sendData();
+}
+
+void receiveHitMiss() {
+   digitalWrite(4 , LOW);
+   // Wait for wireless data
+   while(!Mirf.dataReady());
+   Mirf.getData(data);
+   delay(50);
+   Serial.write(data[0]);
+   delay(500);
+   Serial.write(data[1]);
+   delay(50);
+   // Go to next state
+   receiveData(); 
+}
+
+// Clears the Arduino serial input buffer to avoid storing
+// previous or extra serial data
+void clearSerial() {
+   delay(1000);
+   while(Serial.available() > 0) {
+      dump = Serial.read(); 
+      delay(50);
+   }
+}

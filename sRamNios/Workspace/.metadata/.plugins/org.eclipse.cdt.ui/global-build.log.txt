@@ -1,0 +1,18 @@
+14:03:48 **** Incremental Build of configuration Nios II for project SramNios ****
+make all 
+Info: Building ../sRamEclipse_bsp/
+C:/altera_lite/15.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../sRamEclipse_bsp/
+[BSP build complete]
+[sRamEclipse build complete]
+14:03:53 **** Build of configuration Nios II for project SramNios ****
+make all 
+Info: Building ../sRamEclipse_bsp/
+C:/altera_lite/15.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../sRamEclipse_bsp/
+[BSP build complete]
+[sRamEclipse build complete]
+14:03:54 **** Incremental Build of configuration Nios II for project SramNios ****
+make all 
+Info: Building ../sRamEclipse_bsp/
+C:/altera_lite/15.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../sRamEclipse_bsp/
+[BSP build complete]
+[sRamEclipse build complete]

@@ -1,0 +1,161 @@
+{
+	"partitions" : [
+		{
+			"name" : "Top",
+			"pins" : [
+				{
+					"name" : "LEDR[0]",
+					"strict" : false
+				},
+				{
+					"name" : "LEDR[1]",
+					"strict" : false
+				},
+				{
+					"name" : "LEDR[2]",
+					"strict" : false
+				},
+				{
+					"name" : "LEDR[3]",
+					"strict" : false
+				},
+				{
+					"name" : "LEDR[4]",
+					"strict" : false
+				},
+				{
+					"name" : "LEDR[5]",
+					"strict" : false
+				},
+				{
+					"name" : "LEDR[6]",
+					"strict" : false
+				},
+				{
+					"name" : "LEDR[7]",
+					"strict" : false
+				},
+				{
+					"name" : "LEDR[9]",
+					"strict" : false
+				},
+				{
+					"name" : "serial_out",
+					"strict" : false
+				},
+				{
+					"name" : "rowSink[0]",
+					"strict" : false
+				},
+				{
+					"name" : "rowSink[1]",
+					"strict" : false
+				},
+				{
+					"name" : "rowSink[2]",
+					"strict" : false
+				},
+				{
+					"name" : "rowSink[3]",
+					"strict" : false
+				},
+				{
+					"name" : "rowSink[4]",
+					"strict" : false
+				},
+				{
+					"name" : "rowSink[5]",
+					"strict" : false
+				},
+				{
+					"name" : "rowSink[6]",
+					"strict" : false
+				},
+				{
+					"name" : "rowSink[7]",
+					"strict" : false
+				},
+				{
+					"name" : "greenDriver[0]",
+					"strict" : false
+				},
+				{
+					"name" : "greenDriver[1]",
+					"strict" : false
+				},
+				{
+					"name" : "greenDriver[2]",
+					"strict" : false
+				},
+				{
+					"name" : "greenDriver[3]",
+					"strict" : false
+				},
+				{
+					"name" : "greenDriver[4]",
+					"strict" : false
+				},
+				{
+					"name" : "greenDriver[5]",
+					"strict" : false
+				},
+				{
+					"name" : "greenDriver[6]",
+					"strict" : false
+				},
+				{
+					"name" : "greenDriver[7]",
+					"strict" : false
+				},
+				{
+					"name" : "redDriver[0]",
+					"strict" : false
+				},
+				{
+					"name" : "redDriver[1]",
+					"strict" : false
+				},
+				{
+					"name" : "redDriver[2]",
+					"strict" : false
+				},
+				{
+					"name" : "redDriver[3]",
+					"strict" : false
+				},
+				{
+					"name" : "redDriver[4]",
+					"strict" : false
+				},
+				{
+					"name" : "redDriver[5]",
+					"strict" : false
+				},
+				{
+					"name" : "redDriver[6]",
+					"strict" : false
+				},
+				{
+					"name" : "redDriver[7]",
+					"strict" : false
+				},
+				{
+					"name" : "KEY[1]",
+					"strict" : false
+				},
+				{
+					"name" : "CLOCK_50",
+					"strict" : false
+				},
+				{
+					"name" : "KEY[0]",
+					"strict" : false
+				},
+				{
+					"name" : "serial_in",
+					"strict" : false
+				}
+			]
+		}
+	]
+}

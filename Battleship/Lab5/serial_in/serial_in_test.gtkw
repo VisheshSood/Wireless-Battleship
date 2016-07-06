@@ -1,0 +1,43 @@
+[*]
+[*] GTKWave Analyzer v3.3.66 (w)1999-2015 BSI
+[*] Thu Feb 18 06:41:26 2016
+[*]
+[dumpfile] "C:\Users\huntergoforth\Documents\EE371\Lab4\serial_in\serial_in.vcd"
+[dumpfile_mtime] "Thu Feb 18 06:39:57 2016"
+[dumpfile_size] 2104
+[savefile] "C:\Users\huntergoforth\Documents\EE371\Lab4\serial_in\serial_in_test.gtkw"
+[timestart] 0
+[size] 1000 600
+[pos] -1 -1
+*-8.000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] serial_in_testbench.
+[sst_width] 197
+[signals_width] 142
+[sst_expanded] 1
+[sst_vpaned_height] 153
+@28
+serial_in_testbench.sbd.char_received
+serial_in_testbench.sbd.data_in
+serial_in_testbench.sbd.recv_en
+@22
+serial_in_testbench.bsc0.bsc_count[3:0]
+@28
+serial_in_testbench.bsc0.bsc_en
+serial_in_testbench.bsc0.clk16x
+serial_in_testbench.bsc0.sr_clock
+@22
+serial_in_testbench.bic0.bic_count[3:0]
+@28
+serial_in_testbench.bic0.bic_en
+serial_in_testbench.bic0.seq_complete
+serial_in_testbench.bic0.sr_clock
+@22
+serial_in_testbench.sipo.buffer[9:0]
+@28
+serial_in_testbench.sipo.datain
+@22
+serial_in_testbench.sipo.dataout[7:0]
+@28
+serial_in_testbench.sipo.sr_clock
+[pattern_trace] 1
+[pattern_trace] 0

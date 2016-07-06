@@ -1,0 +1,68 @@
+!SESSION 2016-02-08 19:44:44.977 -----------------------------------------------
+eclipse.buildId=M20120208-0800
+java.version=1.6.0_23
+java.vendor=Sun Microsystems Inc.
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.cpp.product -perspective com.altera.sbtgui.ui.cPerspective
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.cpp.product -perspective com.altera.sbtgui.ui.cPerspective
+
+!ENTRY org.eclipse.cdt.core 1 0 2016-02-08 19:47:30.820
+!MESSAGE Indexed 'sRamEclipse_bsp' (82 sources, 60 headers) in 1.25 sec: 962 declarations; 2,362 references; 117 unresolved inclusions; 5 syntax errors; 200 unresolved names (5.68%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2016-02-08 19:47:34.169
+!MESSAGE Indexed 'sRamEclipse' (1 sources, 14 headers) in 0.05 sec: 20 declarations; 76 references; 19 unresolved inclusions; 0 syntax errors; 9 unresolved names (8.57%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2016-02-08 20:41:49.213
+!MESSAGE Indexed 'sRamEclipse2' (0 sources, 13 headers) in 0.01 sec: 0 declarations; 0 references; 13 unresolved inclusions; 0 syntax errors; 0 unresolved names (0.00%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2016-02-08 22:38:39.582
+!MESSAGE Indexed 'sRamEclipse3_bsp' (82 sources, 104 headers) in 1.94 sec: 2,193 declarations; 3,707 references; 99 unresolved inclusions; 5 syntax errors; 182 unresolved names (2.99%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2016-02-08 22:38:40.780
+!MESSAGE Indexed 'sRamEclipse3' (1 sources, 13 headers) in 0.02 sec: 1 declarations; 1 references; 14 unresolved inclusions; 0 syntax errors; 0 unresolved names (0.00%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2016-02-08 22:43:17.002
+!MESSAGE Indexed 'sRamEclipse' (1 sources, 50 headers) in 0.27 sec: 578 declarations; 709 references; 14 unresolved inclusions; 2 syntax errors; 6 unresolved names (0.46%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2016-02-09 00:17:22.894
+!MESSAGE Indexed 'sRamEcl_bsp' (82 sources, 77 headers) in 0.87 sec: 1,402 declarations; 2,975 references; 117 unresolved inclusions; 5 syntax errors; 203 unresolved names (4.43%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2016-02-09 00:17:25.314
+!MESSAGE Indexed 'sRamEcl' (1 sources, 13 headers) in 0.02 sec: 1 declarations; 1 references; 14 unresolved inclusions; 0 syntax errors; 0 unresolved names (0.00%)
+!SESSION 2016-02-09 00:21:57.229 -----------------------------------------------
+eclipse.buildId=M20120208-0800
+java.version=1.6.0_23
+java.vendor=Sun Microsystems Inc.
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.cpp.product -perspective com.altera.sbtgui.ui.cPerspective
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.cpp.product -perspective com.altera.sbtgui.ui.cPerspective
+
+!ENTRY com.altera.sbtgui.launch 1 0 2016-02-09 00:23:33.115
+!MESSAGE Executing: [C:/altera/14.0/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=DE-SoC on localhost [USB-1]' --device=2 --instance=0 --stop --accept-bad-sysid --sidp=0x11080]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2016-02-09 00:23:38.180
+!MESSAGE Executing: [C:/altera/14.0/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=DE-SoC on localhost [USB-1]' --device=2 --instance=0 --go --accept-bad-sysid --sidp=0x11080 /cygdrive/c/Users/Justin/Documents/EE371/LAB3/sRamNios/software/sRamEcl/sRamEcl.elf]
+
+!ENTRY com.altera.sbtgui.launch 4 0 2016-02-09 00:23:48.119
+!MESSAGE Failed Executing: [nios2-download, '--cable=DE-SoC on localhost [USB-1]', --device=2, --instance=0, --go, --accept-bad-sysid, --sidp=0x11080, /cygdrive/c/Users/Justin/Documents/EE371/LAB3/sRamNios/software/sRamEcl/sRamEcl.elf] return code: 4, 'other error'
+
+!ENTRY com.altera.sbtgui.launch 4 0 2016-02-09 00:23:48.128
+!MESSAGE Downloading ELF Process failed
+
+!ENTRY org.eclipse.cdt.core 1 0 2016-02-09 01:22:31.578
+!MESSAGE Indexed 'sRamEclip_bsp' (82 sources, 103 headers) in 1.53 sec: 2,299 declarations; 4,139 references; 71 unresolved inclusions; 493 syntax errors; 288 unresolved names (4.28%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2016-02-09 01:22:32.519
+!MESSAGE Indexed 'sRamEclip' (1 sources, 13 headers) in 0.04 sec: 1 declarations; 1 references; 14 unresolved inclusions; 0 syntax errors; 0 unresolved names (0.00%)
+
+!ENTRY com.altera.sbtgui.launch 1 0 2016-02-09 01:43:11.771
+!MESSAGE Executing: [C:/altera/14.0/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=DE-SoC on localhost [USB-1]' --device=2 --instance=0 --stop --accept-bad-sysid --sidp=0x11080]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2016-02-09 01:43:16.147
+!MESSAGE Executing: [C:/altera/14.0/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=DE-SoC on localhost [USB-1]' --device=2 --instance=0 --go --accept-bad-sysid --sidp=0x11080 /cygdrive/c/Users/Justin/Documents/EE371/LAB3/sRamNios/software/sRamEclip/sRamEclip.elf]
+
+!ENTRY com.altera.sbtgui.launch 4 0 2016-02-09 01:43:24.258
+!MESSAGE Failed Executing: [nios2-download, '--cable=DE-SoC on localhost [USB-1]', --device=2, --instance=0, --go, --accept-bad-sysid, --sidp=0x11080, /cygdrive/c/Users/Justin/Documents/EE371/LAB3/sRamNios/software/sRamEclip/sRamEclip.elf] return code: 4, 'other error'
+
+!ENTRY com.altera.sbtgui.launch 4 0 2016-02-09 01:43:24.266
+!MESSAGE Downloading ELF Process failed

@@ -1,0 +1,39 @@
+[*]
+[*] GTKWave Analyzer v3.3.66 (w)1999-2015 BSI
+[*] Thu Feb 18 05:16:50 2016
+[*]
+[dumpfile] "C:\Users\huntergoforth\Documents\EE371\Lab4\serial_out.vcd"
+[dumpfile_mtime] "Thu Feb 18 05:15:19 2016"
+[dumpfile_size] 3420
+[savefile] "C:\Users\huntergoforth\Documents\EE371\Lab4\serial_out.gtkw"
+[timestart] 0
+[size] 1000 600
+[pos] -71 -41
+*0.000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] sramTestBench.
+[sst_width] 197
+[signals_width] 142
+[sst_expanded] 1
+[sst_vpaned_height] 153
+@22
+sramTestBench.bic0.bic_count[3:0]
+@28
+sramTestBench.bic0.bic_en
+sramTestBench.bic0.seq_complete
+sramTestBench.bic0.sr_clock
+@22
+sramTestBench.bsc0.bsc_count[3:0]
+@28
+sramTestBench.bsc0.bsc_en
+sramTestBench.bsc0.clk16x
+sramTestBench.piso.load
+@22
+sramTestBench.piso.data[7:0]
+sramTestBench.piso.buffer[9:0]
+@28
+sramTestBench.piso.bit_out
+sramTestBench.buf0.buf_out
+sramTestBench.buf0.buf_in
+sramTestBench.buf0.buf_en
+[pattern_trace] 1
+[pattern_trace] 0

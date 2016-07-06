@@ -1,0 +1,16 @@
+module bic (char_sent, clk, sr_clock, reset, trans_en);
+	input clk, trans_en, sr_clock;
+	output char_sent;
+	
+	reg [3:0] count;
+	
+	always@(posedge clk)
+		if (reset) count <= 4'b0;
+		
+	always@(posedge sr_clock)
+		else if (trans_en) count <= count + 1'b1;
+		else count <= 4'b0;
+		
+	//always@(posedge)
+	
+endmodule

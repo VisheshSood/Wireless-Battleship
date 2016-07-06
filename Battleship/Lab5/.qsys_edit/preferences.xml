@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<preferences>
+ <debug showDebugMenu="0" />
+ <systemtable filter="All Interfaces">
+  <columns>
+   <connections preferredWidth="30" />
+   <irq preferredWidth="34" />
+   <description preferredWidth="168" />
+   <export preferredWidth="97" />
+   <inputclock preferredWidth="60" />
+   <name preferredWidth="142" />
+   <baseaddress preferredWidth="128" />
+  </columns>
+ </systemtable>
+ <library
+   expandedCategories="Project,Library,Library/Processors and Peripherals/Peripherals,Library/Processors and Peripherals" />
+ <window width="1382" height="744" x="-8" y="-8" />
+ <generation block_symbol_file="0" />
+</preferences>

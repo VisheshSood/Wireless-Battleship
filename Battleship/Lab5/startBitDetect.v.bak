@@ -1,0 +1,8 @@
+module startBitDetect(en, data_in, char_received);
+	output reg en = 1'b0;
+	input data_in, char_received;
+
+	always @(negedge data_in or posedge char_received)
+		if (char_received) en <= 1'b0;
+		else en <= 1'b1;
+endmodule

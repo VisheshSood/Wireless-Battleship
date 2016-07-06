@@ -1,0 +1,32 @@
+console asks to configure your board
+press a key to cycle through board configs (led board lights up)
+save board config with another key
+ready to play
+boards become blank
+
+console says its your turn
+send coordinates: 1, 2
+console says you got a hit or miss
+light up led with either green or red for hit or miss
+waiting for incoming missiles...
+console says other player landed a hit or a miss
+console says 1 big ship, 2 1/2 little ships left in your battalion
+
+console says its your turn
+...
+
+you have zero ships left! the enemy has prevailed!
+
+you sunk their battleship, victory is yours!
+
+restart game (Y/N)
+
+console asks to configure your board
+...
+
+wire [7:0] arr1 [7:0]
+
+wire [7:0] arr2 [7:0]
+
+arr1 = arr2
+

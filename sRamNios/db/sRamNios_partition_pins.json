@@ -1,0 +1,137 @@
+{
+	"partitions" : [
+		{
+			"name" : "Top",
+			"pins" : [
+				{
+					"name" : "leds[0]",
+					"strict" : false
+				},
+				{
+					"name" : "leds[1]",
+					"strict" : false
+				},
+				{
+					"name" : "leds[2]",
+					"strict" : false
+				},
+				{
+					"name" : "leds[3]",
+					"strict" : false
+				},
+				{
+					"name" : "leds[4]",
+					"strict" : false
+				},
+				{
+					"name" : "leds[5]",
+					"strict" : false
+				},
+				{
+					"name" : "leds[6]",
+					"strict" : false
+				},
+				{
+					"name" : "leds[7]",
+					"strict" : false
+				},
+				{
+					"name" : "chipSelect",
+					"strict" : false
+				},
+				{
+					"name" : "enable",
+					"strict" : false
+				},
+				{
+					"name" : "readnWrite",
+					"strict" : false
+				},
+				{
+					"name" : "address[0]",
+					"strict" : false
+				},
+				{
+					"name" : "address[1]",
+					"strict" : false
+				},
+				{
+					"name" : "address[2]",
+					"strict" : false
+				},
+				{
+					"name" : "address[3]",
+					"strict" : false
+				},
+				{
+					"name" : "address[4]",
+					"strict" : false
+				},
+				{
+					"name" : "address[5]",
+					"strict" : false
+				},
+				{
+					"name" : "address[6]",
+					"strict" : false
+				},
+				{
+					"name" : "address[7]",
+					"strict" : false
+				},
+				{
+					"name" : "address[8]",
+					"strict" : false
+				},
+				{
+					"name" : "address[9]",
+					"strict" : false
+				},
+				{
+					"name" : "address[10]",
+					"strict" : false
+				},
+				{
+					"name" : "dataOut[0]",
+					"strict" : false
+				},
+				{
+					"name" : "dataOut[1]",
+					"strict" : false
+				},
+				{
+					"name" : "dataOut[2]",
+					"strict" : false
+				},
+				{
+					"name" : "dataOut[3]",
+					"strict" : false
+				},
+				{
+					"name" : "dataOut[4]",
+					"strict" : false
+				},
+				{
+					"name" : "dataOut[5]",
+					"strict" : false
+				},
+				{
+					"name" : "dataOut[6]",
+					"strict" : false
+				},
+				{
+					"name" : "dataOut[7]",
+					"strict" : false
+				},
+				{
+					"name" : "clk",
+					"strict" : false
+				},
+				{
+					"name" : "rst",
+					"strict" : false
+				}
+			]
+		}
+	]
+}

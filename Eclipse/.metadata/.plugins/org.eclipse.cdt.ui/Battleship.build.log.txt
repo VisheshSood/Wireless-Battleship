@@ -1,0 +1,9 @@
+22:57:51 **** Incremental Build of configuration Nios II for project Battleship ****
+make all 
+Info: Building ../Battleship_bsp/
+C:/altera_lite/15.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Battleship_bsp/
+[BSP build complete]
+[Battleship build complete]
+
+22:57:52 Build Finished (took 770ms)
+

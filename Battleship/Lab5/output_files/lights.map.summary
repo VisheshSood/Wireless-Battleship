@@ -1,0 +1,17 @@
+Analysis & Synthesis Status : Successful - Tue Mar 08 14:24:54 2016
+Quartus Prime Version : 15.1.1 Build 189 12/02/2015 SJ Lite Edition
+Revision Name : lights
+Top-level Entity Name : communications
+Family : Cyclone V
+Logic utilization (in ALMs) : N/A
+Total registers : 2113
+Total pins : 41
+Total virtual pins : 0
+Total block memory bits : 2,649,088
+Total DSP Blocks : 0
+Total HSSI RX PCSs : 0
+Total HSSI PMA RX Deserializers : 0
+Total HSSI TX PCSs : 0
+Total HSSI PMA TX Serializers : 0
+Total PLLs : 0
+Total DLLs : 0

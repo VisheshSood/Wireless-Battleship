@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pin_planner>
+	<pin_info>
+		<pin name="SW[9]" source="Pin Planner" >
+		</pin>
+		<pin name="SW[8]" source="Pin Planner" >
+		</pin>
+		<pin name="SW[7]" source="Pin Planner" >
+		</pin>
+		<pin name="SW[6]" source="Pin Planner" >
+		</pin>
+		<pin name="SW[5]" source="Pin Planner" >
+		</pin>
+		<pin name="SW[4]" source="Pin Planner" >
+		</pin>
+		<pin name="SW[3]" source="Pin Planner" >
+		</pin>
+		<pin name="SW[2]" source="Pin Planner" >
+		</pin>
+		<pin name="SW[1]" source="Pin Planner" >
+		</pin>
+		<pin name="SW[0]" source="Pin Planner" >
+		</pin>
+	</pin_info>
+	<buses>
+	</buses>
+	<group_file_association>
+	</group_file_association>
+	<pin_planner_file_specifies>
+	</pin_planner_file_specifies>
+</pin_planner>

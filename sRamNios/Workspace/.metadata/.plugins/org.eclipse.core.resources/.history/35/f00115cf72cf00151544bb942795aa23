@@ -1,0 +1,83 @@
+#define LEDS ((volatile char *) 0x00011070)
+#define DATA ((volatile char *) 0x00011060)
+#define ENABLE ((volatile char *) 0x00011050)
+#define CHIPSELECT ((volatile char *) 0x00011040)
+#define ADDRESS ((volatile char* ) 0x00011030)
+#define READNWRITE ((volatile char *) 0x00011020)
+
+
+void udelay(int n);
+
+
+int main(void)
+{
+	*ENABLE = 0;
+	*CHIPSELECT = 0;
+	*ADDRESS = 0;
+
+	while(1) {
+		alt_putstr("Enter 'w' for write, 'r' for read, 'c' to clear\n");
+		char c;
+		read(0,&c,1);
+		alt_putchar(c);
+		if (c == 'w') {
+			*ENABLE = 1;
+			*CHIPSELECT = 0;
+			int i;
+			for (i = 0; i < 128; i++ ) {
+				*READNWRITE = 0;
+				udelay(100);
+				*ADDRESS = i;
+				*DATA = (char) (127 - i);
+				udelay(100);
+				printf("%x\n" , *DATA);
+				udelay(100);
+				*READNWRITE = 1;
+				udelay(100);
+			}
+			alt_putstr("Write finished\n");
+		} else if (c == 'r') {
+			*READNWRITE = 1;
+			udelay(100);
+			int i;
+			for(i = 0; i < 128; i++) {
+				*ENABLE = 1;
+				udelay(100);
+				*ADDRESS = i;
+				*LEDS = *DATA;
+				printf("%x\n", *DATA);
+				udelay(100);
+				*ENABLE = 0;
+				udelay(100);
+			}
+			alt_putstr("Read finished\n");
+		} else if (c == 'c') {
+			int i;
+			for (i = 0; i < 128; i++ ) {
+				*ENABLE = 0;
+				*READNWRITE = 0;
+				*ADDRESS = i;
+				*DATA = 0;
+				udelay(100);
+				*READNWRITE = 1;
+				udelay(100);
+				*ENABLE = 1;
+			}
+			alt_putstr("Data cleared \n");
+		}
+	}
+
+    return 0;
+}
+
+void udelay(int n) {
+	int i , j;
+	for (i = 0; i < n; i++) {
+		for(j = 0; j < n; j++) {
+
+		}
+	}
+
+
+}
+

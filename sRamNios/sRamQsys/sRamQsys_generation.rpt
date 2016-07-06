@@ -1,0 +1,131 @@
+Info: Starting: Create HDL design files for synthesis
+Info: qsys-generate C:\Users\astro\Documents\EE371\Lab3\Sram\sRamNios\sRamQsys.qsys --synthesis=VERILOG --output-directory=C:\Users\astro\Documents\EE371\Lab3\Sram\sRamNios\sRamQsys\synthesis --family="Cyclone V" --part=5CSEMA5F31C6
+Progress: Loading sRamNios/sRamQsys.qsys
+Progress: Reading input file
+Progress: Adding address_pio [altera_avalon_pio 15.1]
+Progress: Parameterizing module address_pio
+Progress: Adding chipSelect_pio [altera_avalon_pio 15.1]
+Progress: Parameterizing module chipSelect_pio
+Progress: Adding clk_0 [clock_source 15.1]
+Progress: Parameterizing module clk_0
+Progress: Adding cpu [altera_nios2_qsys 15.1]
+Progress: Parameterizing module cpu
+Progress: Adding datain [altera_avalon_pio 15.1]
+Progress: Parameterizing module datain
+Progress: Adding dataout [altera_avalon_pio 15.1]
+Progress: Parameterizing module dataout
+Progress: Adding enable_pio [altera_avalon_pio 15.1]
+Progress: Parameterizing module enable_pio
+Progress: Adding jtag_uart [altera_avalon_jtag_uart 15.1]
+Progress: Parameterizing module jtag_uart
+Progress: Adding led_pio [altera_avalon_pio 15.1]
+Progress: Parameterizing module led_pio
+Progress: Adding onchip_mem [altera_avalon_onchip_memory2 15.1]
+Progress: Parameterizing module onchip_mem
+Progress: Adding readnWrite_pio [altera_avalon_pio 15.1]
+Progress: Parameterizing module readnWrite_pio
+Progress: Adding sys_clk_timer [altera_avalon_timer 15.1]
+Progress: Parameterizing module sys_clk_timer
+Progress: Adding sysid [altera_avalon_sysid_qsys 15.1]
+Progress: Parameterizing module sysid
+Progress: Building connections
+Progress: Parameterizing connections
+Progress: Validating
+Progress: Done reading input file
+Warning: sRamQsys.cpu: Nios II Classic cores are no longer recommended for new projects
+Info: sRamQsys.datain: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: sRamQsys.sysid: System ID is not assigned automatically. Edit the System ID parameter to provide a unique ID
+Info: sRamQsys.sysid: Time stamp will be automatically updated when this component is generated.
+Info: sRamQsys: Generating sRamQsys "sRamQsys" for QUARTUS_SYNTH
+Info: address_pio: Starting RTL generation for module 'sRamQsys_address_pio'
+Info: address_pio:   Generation command is [exec C:/altera_lite/15.1/quartus/bin64/perl/bin/perl.exe -I C:/altera_lite/15.1/quartus/bin64/perl/lib -I C:/altera_lite/15.1/quartus/sopc_builder/bin/europa -I C:/altera_lite/15.1/quartus/sopc_builder/bin/perl_lib -I C:/altera_lite/15.1/quartus/sopc_builder/bin -I C:/altera_lite/15.1/quartus/../ip/altera/sopc_builder_ip/common -I C:/altera_lite/15.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- C:/altera_lite/15.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=sRamQsys_address_pio --dir=C:/Users/astro/AppData/Local/Temp/alt6840_250447896807261373.dir/0001_address_pio_gen/ --quartus_dir=C:/altera_lite/15.1/quartus --verilog --config=C:/Users/astro/AppData/Local/Temp/alt6840_250447896807261373.dir/0001_address_pio_gen//sRamQsys_address_pio_component_configuration.pl  --do_build_sim=0  ]
+Info: address_pio: Done RTL generation for module 'sRamQsys_address_pio'
+Info: address_pio: "sRamQsys" instantiated altera_avalon_pio "address_pio"
+Info: chipSelect_pio: Starting RTL generation for module 'sRamQsys_chipSelect_pio'
+Info: chipSelect_pio:   Generation command is [exec C:/altera_lite/15.1/quartus/bin64/perl/bin/perl.exe -I C:/altera_lite/15.1/quartus/bin64/perl/lib -I C:/altera_lite/15.1/quartus/sopc_builder/bin/europa -I C:/altera_lite/15.1/quartus/sopc_builder/bin/perl_lib -I C:/altera_lite/15.1/quartus/sopc_builder/bin -I C:/altera_lite/15.1/quartus/../ip/altera/sopc_builder_ip/common -I C:/altera_lite/15.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- C:/altera_lite/15.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=sRamQsys_chipSelect_pio --dir=C:/Users/astro/AppData/Local/Temp/alt6840_250447896807261373.dir/0002_chipSelect_pio_gen/ --quartus_dir=C:/altera_lite/15.1/quartus --verilog --config=C:/Users/astro/AppData/Local/Temp/alt6840_250447896807261373.dir/0002_chipSelect_pio_gen//sRamQsys_chipSelect_pio_component_configuration.pl  --do_build_sim=0  ]
+Info: chipSelect_pio: Done RTL generation for module 'sRamQsys_chipSelect_pio'
+Info: chipSelect_pio: "sRamQsys" instantiated altera_avalon_pio "chipSelect_pio"
+Info: cpu: Starting RTL generation for module 'sRamQsys_cpu'
+Info: cpu:   Generation command is [exec C:/altera_lite/15.1/quartus/bin64/eperlcmd.exe -I C:/altera_lite/15.1/quartus/bin64/perl/lib -I C:/altera_lite/15.1/quartus/sopc_builder/bin/europa -I C:/altera_lite/15.1/quartus/sopc_builder/bin/perl_lib -I C:/altera_lite/15.1/quartus/sopc_builder/bin -I C:/altera_lite/15.1/quartus/../ip/altera/nios2_ip/altera_nios2/cpu_lib -I C:/altera_lite/15.1/quartus/../ip/altera/nios2_ip/altera_nios2/nios_lib -I C:/altera_lite/15.1/quartus/../ip/altera/nios2_ip/altera_nios2 -I C:/altera_lite/15.1/quartus/../ip/altera/nios2_ip/altera_nios2 -- C:/altera_lite/15.1/quartus/../ip/altera/nios2_ip/altera_nios2/generate_rtl.epl --name=sRamQsys_cpu --dir=C:/Users/astro/AppData/Local/Temp/alt6840_250447896807261373.dir/0003_cpu_gen/ --quartus_bindir=C:/altera_lite/15.1/quartus/bin64 --verilog --config=C:/Users/astro/AppData/Local/Temp/alt6840_250447896807261373.dir/0003_cpu_gen//sRamQsys_cpu_processor_configuration.pl  --do_build_sim=0  ]
+Info: cpu: # 2016.02.09 13:38:30 (*) Starting Nios II generation
+Info: cpu: # 2016.02.09 13:38:30 (*)   Checking for plaintext license.
+Info: cpu: # 2016.02.09 13:38:35 (*)   Couldn't query license setup in Quartus directory C:/altera_lite/15.1/quartus/bin64
+Info: cpu: # 2016.02.09 13:38:35 (*)   Defaulting to contents of LM_LICENSE_FILE environment variable
+Info: cpu: # 2016.02.09 13:38:35 (*)   LM_LICENSE_FILE environment variable is empty
+Info: cpu: # 2016.02.09 13:38:35 (*)   Plaintext license not found.
+Info: cpu: # 2016.02.09 13:38:35 (*)   Checking for encrypted license (non-evaluation).
+Info: cpu: # 2016.02.09 13:38:40 (*)   Couldn't query license setup in Quartus directory C:/altera_lite/15.1/quartus/bin64
+Info: cpu: # 2016.02.09 13:38:40 (*)   Defaulting to contents of LM_LICENSE_FILE environment variable
+Info: cpu: # 2016.02.09 13:38:40 (*)   LM_LICENSE_FILE environment variable is empty
+Info: cpu: # 2016.02.09 13:38:40 (*)   Encrypted license not found.  Defaulting to OCP evaluation license (produces a time-limited SOF)
+Info: cpu: # 2016.02.09 13:38:40 (*)   Elaborating CPU configuration settings
+Info: cpu: # 2016.02.09 13:38:40 (*)   Creating all objects for CPU
+Info: cpu: # 2016.02.09 13:38:41 (*)     Pipeline frontend
+Info: cpu: # 2016.02.09 13:38:42 (*)   Generating RTL from CPU objects
+Info: cpu: # 2016.02.09 13:38:45 (*)   Creating encrypted RTL
+Info: cpu: # 2016.02.09 13:38:46 (*) Done Nios II generation
+Info: cpu: Done RTL generation for module 'sRamQsys_cpu'
+Info: cpu: "sRamQsys" instantiated altera_nios2_qsys "cpu"
+Info: datain: Starting RTL generation for module 'sRamQsys_datain'
+Info: datain:   Generation command is [exec C:/altera_lite/15.1/quartus/bin64/perl/bin/perl.exe -I C:/altera_lite/15.1/quartus/bin64/perl/lib -I C:/altera_lite/15.1/quartus/sopc_builder/bin/europa -I C:/altera_lite/15.1/quartus/sopc_builder/bin/perl_lib -I C:/altera_lite/15.1/quartus/sopc_builder/bin -I C:/altera_lite/15.1/quartus/../ip/altera/sopc_builder_ip/common -I C:/altera_lite/15.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- C:/altera_lite/15.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=sRamQsys_datain --dir=C:/Users/astro/AppData/Local/Temp/alt6840_250447896807261373.dir/0004_datain_gen/ --quartus_dir=C:/altera_lite/15.1/quartus --verilog --config=C:/Users/astro/AppData/Local/Temp/alt6840_250447896807261373.dir/0004_datain_gen//sRamQsys_datain_component_configuration.pl  --do_build_sim=0  ]
+Info: datain: Done RTL generation for module 'sRamQsys_datain'
+Info: datain: "sRamQsys" instantiated altera_avalon_pio "datain"
+Info: dataout: Starting RTL generation for module 'sRamQsys_dataout'
+Info: dataout:   Generation command is [exec C:/altera_lite/15.1/quartus/bin64/perl/bin/perl.exe -I C:/altera_lite/15.1/quartus/bin64/perl/lib -I C:/altera_lite/15.1/quartus/sopc_builder/bin/europa -I C:/altera_lite/15.1/quartus/sopc_builder/bin/perl_lib -I C:/altera_lite/15.1/quartus/sopc_builder/bin -I C:/altera_lite/15.1/quartus/../ip/altera/sopc_builder_ip/common -I C:/altera_lite/15.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- C:/altera_lite/15.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=sRamQsys_dataout --dir=C:/Users/astro/AppData/Local/Temp/alt6840_250447896807261373.dir/0005_dataout_gen/ --quartus_dir=C:/altera_lite/15.1/quartus --verilog --config=C:/Users/astro/AppData/Local/Temp/alt6840_250447896807261373.dir/0005_dataout_gen//sRamQsys_dataout_component_configuration.pl  --do_build_sim=0  ]
+Info: dataout: Done RTL generation for module 'sRamQsys_dataout'
+Info: dataout: "sRamQsys" instantiated altera_avalon_pio "dataout"
+Info: jtag_uart: Starting RTL generation for module 'sRamQsys_jtag_uart'
+Info: jtag_uart:   Generation command is [exec C:/altera_lite/15.1/quartus/bin64/perl/bin/perl.exe -I C:/altera_lite/15.1/quartus/bin64/perl/lib -I C:/altera_lite/15.1/quartus/sopc_builder/bin/europa -I C:/altera_lite/15.1/quartus/sopc_builder/bin/perl_lib -I C:/altera_lite/15.1/quartus/sopc_builder/bin -I C:/altera_lite/15.1/quartus/../ip/altera/sopc_builder_ip/common -I C:/altera_lite/15.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_jtag_uart -- C:/altera_lite/15.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_jtag_uart/generate_rtl.pl --name=sRamQsys_jtag_uart --dir=C:/Users/astro/AppData/Local/Temp/alt6840_250447896807261373.dir/0006_jtag_uart_gen/ --quartus_dir=C:/altera_lite/15.1/quartus --verilog --config=C:/Users/astro/AppData/Local/Temp/alt6840_250447896807261373.dir/0006_jtag_uart_gen//sRamQsys_jtag_uart_component_configuration.pl  --do_build_sim=0  ]
+Info: jtag_uart: Done RTL generation for module 'sRamQsys_jtag_uart'
+Info: jtag_uart: "sRamQsys" instantiated altera_avalon_jtag_uart "jtag_uart"
+Info: onchip_mem: Starting RTL generation for module 'sRamQsys_onchip_mem'
+Info: onchip_mem:   Generation command is [exec C:/altera_lite/15.1/quartus/bin64/perl/bin/perl.exe -I C:/altera_lite/15.1/quartus/bin64/perl/lib -I C:/altera_lite/15.1/quartus/sopc_builder/bin/europa -I C:/altera_lite/15.1/quartus/sopc_builder/bin/perl_lib -I C:/altera_lite/15.1/quartus/sopc_builder/bin -I C:/altera_lite/15.1/quartus/../ip/altera/sopc_builder_ip/common -I C:/altera_lite/15.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_onchip_memory2 -- C:/altera_lite/15.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_onchip_memory2/generate_rtl.pl --name=sRamQsys_onchip_mem --dir=C:/Users/astro/AppData/Local/Temp/alt6840_250447896807261373.dir/0007_onchip_mem_gen/ --quartus_dir=C:/altera_lite/15.1/quartus --verilog --config=C:/Users/astro/AppData/Local/Temp/alt6840_250447896807261373.dir/0007_onchip_mem_gen//sRamQsys_onchip_mem_component_configuration.pl  --do_build_sim=0  ]
+Info: onchip_mem: Done RTL generation for module 'sRamQsys_onchip_mem'
+Info: onchip_mem: "sRamQsys" instantiated altera_avalon_onchip_memory2 "onchip_mem"
+Info: sys_clk_timer: Starting RTL generation for module 'sRamQsys_sys_clk_timer'
+Info: sys_clk_timer:   Generation command is [exec C:/altera_lite/15.1/quartus/bin64//perl/bin/perl.exe -I C:/altera_lite/15.1/quartus/bin64//perl/lib -I C:/altera_lite/15.1/quartus/sopc_builder/bin/europa -I C:/altera_lite/15.1/quartus/sopc_builder/bin/perl_lib -I C:/altera_lite/15.1/quartus/sopc_builder/bin -I C:/altera_lite/15.1/quartus/../ip/altera/sopc_builder_ip/common -I C:/altera_lite/15.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_timer -- C:/altera_lite/15.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_timer/generate_rtl.pl --name=sRamQsys_sys_clk_timer --dir=C:/Users/astro/AppData/Local/Temp/alt6840_250447896807261373.dir/0008_sys_clk_timer_gen/ --quartus_dir=C:/altera_lite/15.1/quartus --verilog --config=C:/Users/astro/AppData/Local/Temp/alt6840_250447896807261373.dir/0008_sys_clk_timer_gen//sRamQsys_sys_clk_timer_component_configuration.pl  --do_build_sim=0  ]
+Info: sys_clk_timer: Done RTL generation for module 'sRamQsys_sys_clk_timer'
+Info: sys_clk_timer: "sRamQsys" instantiated altera_avalon_timer "sys_clk_timer"
+Info: sysid: "sRamQsys" instantiated altera_avalon_sysid_qsys "sysid"
+Info: avalon_st_adapter: Inserting error_adapter: error_adapter_0
+Info: avalon_st_adapter_001: Inserting error_adapter: error_adapter_0
+Info: avalon_st_adapter_002: Inserting error_adapter: error_adapter_0
+Info: avalon_st_adapter_003: Inserting error_adapter: error_adapter_0
+Info: avalon_st_adapter_004: Inserting error_adapter: error_adapter_0
+Info: avalon_st_adapter_005: Inserting error_adapter: error_adapter_0
+Info: avalon_st_adapter_006: Inserting error_adapter: error_adapter_0
+Info: avalon_st_adapter_007: Inserting error_adapter: error_adapter_0
+Info: avalon_st_adapter_008: Inserting error_adapter: error_adapter_0
+Info: avalon_st_adapter_009: Inserting error_adapter: error_adapter_0
+Info: avalon_st_adapter_010: Inserting error_adapter: error_adapter_0
+Info: avalon_st_adapter_011: Inserting error_adapter: error_adapter_0
+Info: mm_interconnect_0: "sRamQsys" instantiated altera_mm_interconnect "mm_interconnect_0"
+Info: irq_mapper: "sRamQsys" instantiated altera_irq_mapper "irq_mapper"
+Info: rst_controller: "sRamQsys" instantiated altera_reset_controller "rst_controller"
+Info: cpu_data_master_translator: "mm_interconnect_0" instantiated altera_merlin_master_translator "cpu_data_master_translator"
+Info: jtag_uart_avalon_jtag_slave_translator: "mm_interconnect_0" instantiated altera_merlin_slave_translator "jtag_uart_avalon_jtag_slave_translator"
+Info: cpu_data_master_agent: "mm_interconnect_0" instantiated altera_merlin_master_agent "cpu_data_master_agent"
+Info: jtag_uart_avalon_jtag_slave_agent: "mm_interconnect_0" instantiated altera_merlin_slave_agent "jtag_uart_avalon_jtag_slave_agent"
+Info: jtag_uart_avalon_jtag_slave_agent_rsp_fifo: "mm_interconnect_0" instantiated altera_avalon_sc_fifo "jtag_uart_avalon_jtag_slave_agent_rsp_fifo"
+Info: router: "mm_interconnect_0" instantiated altera_merlin_router "router"
+Info: router_001: "mm_interconnect_0" instantiated altera_merlin_router "router_001"
+Info: router_002: "mm_interconnect_0" instantiated altera_merlin_router "router_002"
+Info: router_004: "mm_interconnect_0" instantiated altera_merlin_router "router_004"
+Info: cpu_instruction_master_limiter: "mm_interconnect_0" instantiated altera_merlin_traffic_limiter "cpu_instruction_master_limiter"
+Info: Reusing file C:/Users/astro/Documents/EE371/Lab3/Sram/sRamNios/sRamQsys/synthesis/submodules/altera_avalon_sc_fifo.v
+Info: cmd_demux: "mm_interconnect_0" instantiated altera_merlin_demultiplexer "cmd_demux"
+Info: cmd_demux_001: "mm_interconnect_0" instantiated altera_merlin_demultiplexer "cmd_demux_001"
+Info: cmd_mux: "mm_interconnect_0" instantiated altera_merlin_multiplexer "cmd_mux"
+Info: cmd_mux_002: "mm_interconnect_0" instantiated altera_merlin_multiplexer "cmd_mux_002"
+Info: Reusing file C:/Users/astro/Documents/EE371/Lab3/Sram/sRamNios/sRamQsys/synthesis/submodules/altera_merlin_arbitrator.sv
+Info: rsp_demux: "mm_interconnect_0" instantiated altera_merlin_demultiplexer "rsp_demux"
+Info: rsp_demux_002: "mm_interconnect_0" instantiated altera_merlin_demultiplexer "rsp_demux_002"
+Info: rsp_mux: "mm_interconnect_0" instantiated altera_merlin_multiplexer "rsp_mux"
+Info: Reusing file C:/Users/astro/Documents/EE371/Lab3/Sram/sRamNios/sRamQsys/synthesis/submodules/altera_merlin_arbitrator.sv
+Info: rsp_mux_001: "mm_interconnect_0" instantiated altera_merlin_multiplexer "rsp_mux_001"
+Info: Reusing file C:/Users/astro/Documents/EE371/Lab3/Sram/sRamNios/sRamQsys/synthesis/submodules/altera_merlin_arbitrator.sv
+Info: avalon_st_adapter: "mm_interconnect_0" instantiated altera_avalon_st_adapter "avalon_st_adapter"
+Info: error_adapter_0: "avalon_st_adapter" instantiated error_adapter "error_adapter_0"
+Info: sRamQsys: Done "sRamQsys" with 33 modules, 51 files
+Info: qsys-generate succeeded.
+Info: Finished: Create HDL design files for synthesis

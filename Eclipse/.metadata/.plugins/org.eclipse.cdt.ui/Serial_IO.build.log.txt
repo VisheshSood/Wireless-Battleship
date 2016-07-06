@@ -1,0 +1,6 @@
+16:28:23 **** Clean-only build of configuration Nios II for project Serial_IO ****
+make clean 
+[Serial_IO clean complete]
+
+16:28:23 Build Finished (took 248ms)
+

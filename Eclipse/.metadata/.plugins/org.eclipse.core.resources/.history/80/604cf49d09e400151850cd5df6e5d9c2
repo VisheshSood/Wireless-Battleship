@@ -1,0 +1,918 @@
+#include "sys/alt_stdio.h"
+#include "altera_avalon_pio_regs.h"
+#include <unistd.h>
+
+// SRAM
+#define data (char*) 0x000210e0
+#define address (char*) 0x000210a0
+#define chipSelect (char*) 0x000210c0
+#define readnWrite (char*) 0x000210b0
+#define notOutEn (char*) 0x000210d0
+#define yourBoard03 (char*)0x00021050
+#define yourBoard47 (char*)0x00021030
+#define yourShots03 (char*)0x00021040
+#define yourShots47 (char*)0x00021020
+
+// I/O
+#define char_read (char*) 0x00021110 // TODO we do not have char_read in our verilog
+#define char_recv (char*) 0x00021080
+#define data_in (char*) 0x00021100
+#define load (char*) 0x00021070
+#define char_sent (char*) 0x00021090
+#define trans_en (char*) 0x00021060
+#define data_out (char*) 0x000210f0
+#define LEDs (char*) 0x00021120
+
+#define bufLen 10
+#define SMALL_SHIP_LENGTH 3
+#define LARGE_SHIP_LENGTH 4
+#define BOARD_WIDTH (unsigned int) 8
+#define BOARD_HEIGHT (unsigned int) 8
+#define shotsBase (unsigned int) 0
+#define hitsBase (unsigned int) 8
+#define boardBase (unsigned int) 16
+unsigned char inputBuffer[bufLen];
+unsigned char outputBuffer[bufLen];
+unsigned char sent;
+unsigned char parity;
+unsigned int enemyHits;
+unsigned int yourHits = 0;
+unsigned int yourShotX;
+unsigned int yourShotY;
+unsigned int theirShotX;
+unsigned int theirShotY;
+
+unsigned int charToInt(unsigned char c) {
+    return c > '@' ? c - '@' : c - '0';
+}
+
+void enterString() {
+	int i = 0;
+	unsigned char c = alt_getchar();
+	while (c != '\n') {
+		outputBuffer[i] = c;
+		c = alt_getchar();
+		i++;
+	}
+	outputBuffer[i] = '\0';
+}
+
+// checkIndex returns 0 if the coords are within the bounds of the gameboard
+int checkIndex(int x, int y) {
+    if (x >= 0 && x <= BOARD_WIDTH &&
+        y >= 0 && y <= BOARD_HEIGHT) {
+        return 0;
+    }
+    return 1;
+}
+
+unsigned char computeParity(char character) {
+	character ^= character >> 4;
+	character ^= character >> 2;
+	character ^= character >> 1;
+	character &= 1;
+	return character;
+}
+
+unsigned char createByte(int x) {
+	unsigned char c = 1;
+	return c << (BOARD_WIDTH - x);
+}
+
+void sendChar(char c) {
+	alt_printf("currently sending ");
+	alt_putchar(c);
+	alt_putchar('\n');
+	sent = c;
+	parity = sent;
+	parity = computeParity(parity);
+	sent <<= 1;
+	sent = parity + sent;
+	*data_out = sent;
+	usleep(5);
+	*load = 1;
+	usleep(5);
+	*trans_en = 1;
+	usleep(5);
+	*load = 0;
+	while (*char_sent == 0) {
+		alt_printf("");
+	}
+	*trans_en = 0;
+	usleep(100);
+}
+
+int readString() {
+	int i = 0;
+	unsigned char received = 1;
+	while (received != '\0') {
+		if (*char_recv) {
+			received = *data_in;
+			parity = received & 1;
+			received >>= 1;
+			if (computeParity(received) == parity) {
+				inputBuffer[i] = received;
+				*char_read = 1;
+				usleep(5);
+				*char_read = 0;
+			} else {
+				alt_printf("Error: Received byte \"%c\" which has incorrect parity bit\n", *data_in);
+				*char_read = 1;
+				usleep(5);
+				*char_read = 0;
+				return 1;
+			}
+			i++;
+		}
+	}
+	return 0;
+}
+
+void sendString() {
+	int i;
+	for (i = 0; i < bufLen; i++) {
+		if (outputBuffer[i] == '\0') {
+			sendChar(outputBuffer[i]);
+			break;
+		} else {
+			sendChar(outputBuffer[i]);
+		}
+	}
+}
+
+void printInput() {
+	int i = 0;
+	while (inputBuffer[i] != '\0') {
+		alt_putchar(inputBuffer[i]);
+		i++;
+	}
+	alt_putchar('\n');
+}
+
+unsigned char readSRAM(int addr) {
+	unsigned char out;
+	*address = addr;
+	*notOutEn = 0;
+	out = *data;
+	usleep(10);
+	*notOutEn = 1;
+	return out;
+}
+
+void writeSRAM(int addr, unsigned char byte) {
+	*address = addr;
+	*data = byte;
+	*readnWrite = 0;
+	usleep(1);
+	*readnWrite = 1;
+}
+
+// checkMove returns 0 if the index on the given board is low
+int checkMove (unsigned int x, unsigned int y, unsigned int boardAddr) {
+    unsigned char byte;
+	byte = readSRAM(boardAddr + (y - 1));
+	byte = byte >> (BOARD_WIDTH - x);
+	return byte & 1;
+}
+
+void translateOutputBuffer() {
+	yourShotY = charToInt(outputBuffer[0]);
+	yourShotX = charToInt(outputBuffer[1]);
+}
+
+void translateInputBuffer() {
+	theirShotY = charToInt(inputBuffer[0]);
+	theirShotX = charToInt(inputBuffer[1]);
+}
+
+void updateEnemyBoard(int board) {
+	unsigned char row;
+	row = readSRAM(yourShotY - 1 + board);
+	alt_printf("Current values at row %x: %x\n", yourShotY, row);
+	unsigned char newRow;
+	newRow = row | createByte(yourShotX);
+	alt_printf("Inserting at row %x: %x\n", yourShotY, newRow);
+	writeSRAM(yourShotY - 1 + board, newRow);
+}
+
+void updateYourBoard() {
+	int hit;
+    unsigned char byte = readSRAM(boardBase + theirShotY - 1);
+    alt_printf("The row byte for row %x is %x ", theirShotY, byte);
+	hit = (byte >> (BOARD_WIDTH - theirShotX)) & 0x01;
+	if (hit) {
+		alt_printf("Enemy got a hit\n");
+		writeSRAM(boardBase + theirShotY - 1, ~createByte(theirShotX) & byte);
+		enemyHits++;
+		outputBuffer[0] = '1';
+		outputBuffer[1] = '\0';
+	} else {
+		alt_printf("Enemy has missed\n");
+		outputBuffer[0] = '0';
+		outputBuffer[1] = '\0';
+	}
+}
+
+/**
+ * printEnemyBoard() returns void
+ * Prints an ASCII representation of the enemy's current board state
+ * Confirmed hits are marked with "X", Missed shots are marked with "O",
+ * empty space is marked with "-"
+ */
+void printEnemyBoard() {
+	unsigned char byteShot;
+	unsigned char byteHit;
+	int ishift;
+	int ishot = shotsBase;
+	int ihit = hitsBase;
+	int bitShot;
+	int bitHit;
+	alt_printf("  1 2 3 4 5 6 7 8\n");
+	while (ishot < shotsBase + 8) {
+		alt_printf("%c ", 'A' + ishot - shotsBase);
+		byteShot = readSRAM(ishot);
+		byteHit = readSRAM(ihit);
+		for (ishift = 7; ishift >= 0; ishift--) {
+			bitShot = (byteShot >> ishift) & 0x01;
+			bitHit = (byteHit >> ishift) & 0x01;
+			if (bitShot & bitHit) {
+				alt_putchar('X');
+			} else if (bitShot) {
+				alt_putchar('O');
+			} else {
+				alt_putchar('-');
+			}
+			alt_putchar(' ');
+		}
+		alt_putchar('\n');
+		ishot++;
+		ihit++;
+	}
+}
+
+/**
+ * printYourBoard() returns void
+ * Prints an ASCII representation of a player's current board state
+ * Boats are marked with "B", empty space is marked with "-"
+ */
+void printYourBoard() {
+	unsigned char byteBoard;
+	int ishift;
+	int iboard = boardBase;
+	int bitBoard;
+	alt_printf("  1 2 3 4 5 6 7 8\n");
+	while (iboard < boardBase + 8) {
+		alt_printf("%c ", 'A' + iboard - boardBase);
+		byteBoard = readSRAM(iboard);
+		for (ishift = 7; ishift >= 0; ishift--) {
+			bitBoard = (byteBoard >> ishift) & 0x01;
+			if (bitBoard) {
+				alt_putchar('B');
+			} else {
+				alt_putchar('-');
+			}
+			alt_putchar(' ');
+		}
+		alt_putchar('\n');
+		iboard++;
+	}
+}
+
+/**
+ * eraseSRAM() returns void
+ * Routine to clear all data on the SRAM
+ */
+void eraseSRAM() {
+	int i;
+	for (i = 0; i < 30; i++) {
+		writeSRAM(i, 0);
+	}
+}
+
+/**
+ * setIndexHigh() return void
+ * Accepts integers x and y for coordinates, and a base address for a game board
+ * Uses the coordinates to "turn on" a bit at that location on the given board
+ */
+void setIndexHigh (int x, int y, int base) {
+	unsigned char byte;
+	byte = readSRAM(base + y - 1);
+	byte = createByte(x) | byte;
+	writeSRAM(base + y - 1, byte);
+}
+
+/**
+ * setUpBoats() returns void
+ * Initializes game by placing the player's boats on their board
+ * sizes of the boats are bound by LARGE_SHIP_LENGTH and SMALL_SHIP_LENGTH
+ * where each subsequent boat will be 1 unit smaller than before
+ * The user will be prompted for a coordinate and an orientation
+ * 'v' assumes the ship is placed at the given coordinate and continued down
+ * 'h' assumes the ship is placed at the given coordinate and continued left
+ */
+void setUpBoats() {
+    int i;
+	int j;
+	int check = 0;
+	unsigned char xCoor;
+	unsigned char yCoor;
+	unsigned char orientation;
+	//unsigned char byte;
+
+	//int move;
+	//int index;
+	for (i = LARGE_SHIP_LENGTH; i >= SMALL_SHIP_LENGTH; i--) {
+		do {
+			alt_printf("Please choose coordinates for length %x ship: ", i);
+			yCoor = charToInt(alt_getchar());
+			xCoor = charToInt(alt_getchar());
+			alt_getchar();
+			do {
+				alt_printf("Please choose orientation (v or h): ");
+				orientation = alt_getchar();
+				alt_getchar();
+			} while (orientation != 'h' && orientation != 'v');
+
+			for (j = i - 1; j >= 0; j--) {
+				if (orientation == 'v') {
+					check = checkMove(xCoor, yCoor + j, boardBase) ||
+							checkIndex(xCoor, yCoor + j);
+				} else {
+					check = checkMove(xCoor + j, yCoor, boardBase) ||
+							checkIndex(xCoor + j, yCoor);
+				}
+				if (check) {
+					alt_printf("Sorry, that location is off the map or already taken\n");
+					break;
+				}
+			}
+
+			if (!check) {
+				for (j = i - 1; j >= 0; j--) {
+					if (orientation == 'v') {
+						setIndexHigh(xCoor, yCoor + j, boardBase);
+					} else {
+						setIndexHigh(xCoor + j, yCoor, boardBase);
+					}
+				}
+			}
+		} while (check);
+		printYourBoard();
+	}
+}
+
+int main() {
+	*char_read = 1;
+	usleep(5);
+	*char_read = 0;
+	eraseSRAM();
+
+	int i;
+	int totalHits = 0;
+	for (i = SMALL_SHIP_LENGTH; i <= LARGE_SHIP_LENGTH; i++) {
+		totalHits += i;
+	}
+
+	setUpBoats();
+
+	int yourTurn;
+	int player;
+	int otherPlayer;
+	int notValidMove = 1;
+	alt_printf("Are you player 1 or 2? ");
+	player = charToInt(alt_getchar());
+	otherPlayer = 3 - player;
+	yourTurn = 2 - player;
+	alt_getchar();
+	while (yourHits != totalHits && enemyHits != totalHits) {
+		if (yourTurn) {
+			while (notValidMove) {
+				alt_printf("Please enter a coordinate to fire at: ");
+				enterString();
+				translateOutputBuffer();
+				notValidMove = checkMove(yourShotX, yourShotY, shotsBase) ||
+						checkIndex(yourShotX, yourShotY);
+			}
+			sendString();
+			readString();
+			alt_printf("Updating shots board:\n");
+			updateEnemyBoard(shotsBase);
+			translateInputBuffer();
+			if (charToInt(inputBuffer[0])) {
+				alt_printf("Updating hits board:\n");
+				updateEnemyBoard(hitsBase);
+				yourHits++;
+			}
+			alt_printf("Shots and Hits on the Enemy:\n");
+			printEnemyBoard();
+			alt_printf("Your Ships:\n");
+			printYourBoard();
+			notValidMove = 1;
+			yourTurn = 0;
+		} else {
+			alt_printf("Waiting for player %x to make a move...", otherPlayer);
+			readString();
+			translateInputBuffer();
+			alt_printf("Enemy has fired on coordinate %c%c\n", inputBuffer[0], inputBuffer[1]);
+			alt_printf("Translates to integer coordinate %x%x\n", theirShotY, theirShotX);
+			updateYourBoard();
+			sendString();
+			alt_printf("Shots and Hits on the Enemy:\n");
+			printEnemyBoard();
+			alt_printf("Your Ships:\n");
+			printYourBoard();
+			yourTurn = 1;
+		}
+	}
+
+	if (yourHits == 6) {
+		alt_printf("You sunk all of player %x ships! Game over...", otherPlayer);
+	} else {
+		alt_printf("The enemy has sunken all of your ships! Game over...");
+	}
+
+	/*
+	*chipSelect = 0;
+	*readnWrite = 1;
+	*notOutEn = 1;
+
+	unsigned char zero;
+
+	while (1) {
+		unsigned char choice;
+		unsigned char d;
+		unsigned char a;
+
+		alt_printf("Enter 'r' to read, 'w' to write: ");
+		choice = alt_getchar();
+		alt_getchar();
+		alt_printf("Enter address to read/write: ");
+		a = alt_getchar();
+		alt_getchar();
+		if (choice == 'w') {
+			alt_printf("Enter char to write: ");
+			d = alt_getchar();
+			alt_getchar();
+			writeSRAM(a, d);
+		} else if (choice == 'r') {
+			d = readSRAM(a);
+			alt_printf("SRAM read: %c \n", d);
+		}
+	*/
+
+	/*
+	while (1) {
+		int readError;
+		alt_printf("Waiting to receive...\n");
+		readError = readString();
+		while (readError) {
+			readError = readString();
+		}
+		printInput();
+	}
+
+	while (1) {
+		alt_printf("Please enter a string to send: ");
+		enterString();
+		alt_printf("Sending...");
+		sendString();
+		alt_printf("Sent...");
+	}
+	*/
+	/*
+		eraseSRAM();
+		yourShotY = 4;
+		yourShotX = 3;
+		updateEnemyBoard(shotsBase);
+		printEnemyBoard();
+		yourShotY = 4;
+		yourShotX = 5;
+		updateEnemyBoard(shotsBase);
+	    printEnemyBoard();
+	    updateEnemyBoard(hitsBase);
+	    printEnemyBoard();
+
+		eraseSRAM();
+		setUpBoats();
+		printYourBoard();
+		*/
+	return 0;
+}
+
+#include "sys/alt_stdio.h"
+#include "altera_avalon_pio_regs.h"
+#include <unistd.h>
+
+
+
+#define bufLen 10
+#define BOARD_WIDTH 8
+#define BOARD_HEIGHT 8
+#define shotsBase 0
+#define hitsBase 8
+#define boardBase 16
+unsigned char inputBuffer[bufLen];
+unsigned char outputBuffer[bufLen];
+unsigned char sent;
+unsigned char parity;
+int enemyHits;
+int yourHits = 0;
+int yourShotX;
+int yourShotY;
+int theirShotX;
+int theirShotY;
+int prevMoves[BOARD_WIDTH*BOARD_HEIGHT];
+
+unsigned char readSRAM(int addr);
+
+int charToInt(char c) {
+    return c > '@' ? c - '@' : c - '0';
+}
+
+void enterString() {
+	int i = 0;
+	unsigned char c = alt_getchar();
+	while (c != '\n') {
+		outputBuffer[i] = c;
+		c = alt_getchar();
+		i++;
+	}
+	outputBuffer[i] = '\0';
+}
+
+int checkMove (int x, int y, int boardAddr) {
+    unsigned char byte;
+	byte = readSRAM(boardAddr - 1 + y);
+	byte = byte >> x;
+	return byte & 1;
+}
+
+int checkIndex(int x, int y) {
+    if (yourShotX >= 0 && yourShotX < (BOARD_WIDTH-1) &&
+        yourShotY >= 0 && yourShotY < (BOARD_HEIGHT-1)) {
+        return 0;
+    }
+    return 1;
+}
+
+unsigned char computeParity(char character) {
+	character ^= character >> 4;
+	character ^= character >> 2;
+	character ^= character >> 1;
+	character &= 1;
+	return character;
+}
+
+char createByte(int column) {
+	char c = 1;
+	c = c << column;
+	return c;
+}
+
+void sendChar(char c) {
+	alt_printf("currently sending ");
+	alt_putchar(c);
+	alt_putchar('\n');
+	sent = c;
+	parity = sent;
+	parity = computeParity(parity);
+	sent <<= 1;
+	sent = parity + sent;
+	*data_out = sent;
+	usleep(5);
+	*load = 1;
+	usleep(5);
+	*trans_en = 1;
+	usleep(5);
+	*load = 0;
+	while (*char_sent == 0) {
+		alt_printf("");
+	}
+	*trans_en = 0;
+	usleep(100);
+}
+
+int readString() {
+	int i = 0;
+	unsigned char received = 1;
+	while (received != '\0') {
+		if (*char_recv) {
+			received = *data_in;
+			parity = received & 1;
+			received >>= 1;
+			if (computeParity(received) == parity) {
+				inputBuffer[i] = received;
+				*char_read = 1;
+				usleep(5);
+				*char_read = 0;
+			} else {
+				alt_printf("Error: Received byte \"%c\" which has incorrect parity bit\n", *data_in);
+				*char_read = 1;
+				usleep(5);
+				*char_read = 0;
+				return 1;
+			}
+			i++;
+		}
+	}
+	return 0;
+}
+
+void sendString() {
+	int i;
+	for (i = 0; i < bufLen; i++) {
+		if (outputBuffer[i] == '\0') {
+			sendChar(outputBuffer[i]);
+			break;
+		} else {
+			sendChar(outputBuffer[i]);
+		}
+	}
+}
+
+void printInput() {
+	int i = 0;
+	while (inputBuffer[i] != '\0') {
+		alt_putchar(inputBuffer[i]);
+		i++;
+	}
+	alt_putchar('\n');
+}
+
+unsigned char readSRAM(int addr) {
+	unsigned char out;
+	*chipSelect = 1;
+	*readnWrite = 0;
+	*address = addr;
+	*notOutEn = 0;
+	out = *data;
+	usleep(1);
+	*notOutEn = 1;
+	return out;
+}
+
+void writeSRAM(int addr, unsigned char byte) {
+	*address = addr;
+	*data = byte;
+	*chipSelect = 1;
+	*readnWrite = 0;
+	usleep(1);
+	*readnWrite = 1;
+	*chipSelect = 0;
+}
+
+void translateOutputBuffer() {
+	yourShotY = charToInt(inputBuffer[0]);
+	yourShotX = charToInt(inputBuffer[1]);
+}
+
+void translateInputBuffer() {
+	theirShotY = charToInt(outputBuffer[0]);
+	theirShotX = charToInt(outputBuffer[1]);
+}
+
+void printYourBoard() {
+	unsigned char byteBoard;
+	int ishift;
+	int iboard = boardBase;
+	int bitBoard;
+	while (iboard < 8) {
+		byteBoard = readSRAM(iboard);
+		for (ishift = 0; ishift < 8; ishift++) {
+			bitBoard = (byteBoard >> ishift) & 0x01;
+			if (bitBoard) {
+				alt_putchar('B');
+			} else {
+				alt_putchar('-');
+			}
+		}
+		alt_putchar('\n');
+		iboard++;
+	}
+}
+
+void printEnemyBoard() {
+	unsigned char byteShot;
+	unsigned char byteHit;
+	int ishift;
+	int ishot = shotsBase;
+	int ihit = hitsBase;
+	int bitShot;
+	int bitHit;
+	while (ishot < 8) {
+		byteShot = readSRAM(ishot);
+		byteHit = readSRAM(ihit);
+		for (ishift = 0; ishift < 8; ishift++) {
+			bitShot = (byteShot >> ishift) & 0x01;
+			bitHit = (byteHit >> ishift) & 0x01;
+			if (bitShot & bitHit) {
+				alt_putchar('X');
+			} else if (bitShot) {
+				alt_putchar('O');
+			} else {
+				alt_putchar('-');
+			}
+		}
+		alt_putchar('\n');
+		ishot++;
+		ihit++;
+	}
+}
+
+void updateEnemyBoard(int board) {
+	unsigned char row;
+	row = readSRAM(yourShotY + board);
+	unsigned char newRow;
+	newRow = row + createByte(yourShotX);
+	writeSRAM(yourShotY, newRow);
+	// TODO LED array stuff
+	//*yourShots = readSRAM(yourShotY);
+}
+
+void updateYourBoard() {
+	int hit;
+    unsigned char byte = readSRAM(boardBase + theirShotY - 1);
+	hit = (byte >> theirShotX - 1) & 0x01;
+	if (hit) {
+		alt_printf("Enemy got a hit");
+		writeSRAM(theirShotY, ~createByte(theirShotX) & byte);
+		// TODO LED array stuff
+		//*yourBoard = readSRAM(theirShotY);
+		enemyHits++;
+		outputBuffer[0] = 1;
+		outputBuffer[1] = '\n';
+	} else {
+		alt_printf("Enemy has missed");
+		outputBuffer[0] = 0;
+		outputBuffer[1] = '\n';
+	}
+}
+
+void setUpBoats() {
+    int i;
+	int j;
+	unsigned char check = 0;
+	unsigned char xCoor;
+	unsigned char yCoor;
+	unsigned char orientation;
+	for (i = 3; i > 0; i--) {
+		do {
+			alt_printf("Please choose coordinates for length %d ship: ", i);
+			yCoor = charToInt(alt_getchar());
+			xCoor = charToInt(alt_getchar());
+			alt_getchar();
+			do {
+				alt_printf("Please choose orientation (v or h): ");
+				orientation = alt_getchar();
+				alt_getchar();
+			} while (orientation != 'h' || orientation != 'v');
+			if (checkIndex(xCoor, yCoor)) {
+				alt_printf("Invalid board coordinate\n");
+				check = 1;
+			} else {
+				for (j = i - 1; j >= 0; j--) {
+					if (orientation == 'h') {
+						check = checkMove(xCoor, yCoor + i, boardBase);
+					} else {
+						check = checkMove(xCoor + i, yCoor, boardBase);
+					}
+					if (check) {
+						break;
+					}
+				}
+			}
+		} while (check);
+	}
+}
+
+/**
+ * Displays yourShip or yourShots boards on the 8x8 LED array
+ */
+void ledArray() {
+	unsigned int yb03 = (readSRAM(8)<<24) + (readSRAM(9)<<16) + (readSRAM(10)<<8) + readSRAM(11);
+	unsigned int yb47 = (readSRAM(12)<<24) + (readSRAM(13)<<16) + (readSRAM(14)<<8) + readSRAM(15);
+	unsigned int ys03 = (readSRAM(8)<<24) + (readSRAM(9)<<16) + (readSRAM(10)<<8) + readSRAM(11);
+	unsigned int ys47 = (readSRAM(12)<<24) + (readSRAM(13)<<16) + (readSRAM(14)<<8) + readSRAM(15);
+	*yourBoard03 = yb03;
+	*yourBoard47 = yb47;
+	*yourShots03 = ys03;
+	*yourShots47 = ys47;
+	alt_putchar(*yourBoard03);
+	alt_putchar(*yourBoard47);
+	alt_putchar(*yourShots03);
+	alt_putchar(*yourShots47);
+}
+
+int main() {
+/*
+	while (1) {
+
+		// TODO testing SRAM/LED array
+		int i;
+		for (i = 0; i < 2048; i++) {
+			writeSRAM(i, (char) ('a' + i) % 256);
+			usleep(5);
+			unsigned char c = readSRAM(i);
+			//alt_putchar(c);
+			ledArray();
+		}
+	}
+	*/
+
+	/*
+	setUpBoats();
+
+	int yourTurn;
+	int validMove = 0;
+	alt_printf("Are you player 1 or 2? ");
+	yourTurn = charToInt(alt_getchar()) - 1;
+	alt_getchar();
+	while (yourHits != 6 && enemyHits != 6) {
+		if (yourTurn) {
+			while (!validMove) {
+				alt_printf("Please enter a coordinate to fire at: ");
+				enterString();
+				translateOutputBuffer();
+				validMove = checkMove();
+			}
+			sendString();
+			updateEnemyBoard(shotsBase);
+			readString();
+			translateInputBuffer();
+			if (charToInt(inputBuffer[0])) {
+				updateEnemyBoard(hitsBase);
+				yourHits++;
+			}
+			printEnemyBoard();
+			printYourBoard();
+			yourTurn = 0;
+		} else {
+			alt_printf("Waiting for player 2 to make a move...");
+			readString();
+			translateInputBuffer();
+			updateYourBoard();
+			sendString();
+			printYourBoard();
+			yourTurn = 1;
+		}
+	}
+
+	if (yourHits == 6) {
+		alt_printf("You sunk all of Player 2's ships! Game over...");
+	} else {
+		alt_printf("The enemy has sunken all of your ships! Game over...");
+	}
+	*/
+
+	/*
+	*chipSelect = 0;
+	*readnWrite = 1;
+	*notOutEn = 1;
+
+	unsigned char zero;
+
+	while (1) {
+		unsigned char choice;
+		unsigned char d;
+		unsigned char a;
+
+		alt_printf("Enter 'r' to read, 'w' to write: ");
+		choice = alt_getchar();
+		alt_getchar();
+		alt_printf("Enter address to read/write: ");
+		a = alt_getchar();
+		alt_getchar();
+		if (choice == 'w') {
+			alt_printf("Enter char to write: ");
+			d = alt_getchar();
+			alt_getchar();
+			writeSRAM(a, d);
+		} else if (choice == 'r') {
+			d = readSRAM(a);
+			alt_printf("SRAM read: %c \n", d);
+		}
+	*/
+
+	/*
+	while (1) {
+		int readError;
+		alt_printf("Waiting to receive...\n");
+		readError = readString();
+		while (readError) {
+			readError = readString();
+		}
+		printInput();
+	}
+
+	while (1) {
+		alt_printf("Please enter a string to send: ");
+		enterString();
+		alt_printf("Sending...");
+		sendString();
+		alt_printf("Sent...");
+	}
+	*/
+
+	return 0;
+}
+

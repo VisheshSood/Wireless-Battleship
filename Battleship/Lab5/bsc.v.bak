@@ -1,0 +1,18 @@
+module bsc (bsc_clock, clk, trans_en);
+	input clk;
+	input trans_en;
+	output bsc_clock;
+	
+	reg [3:0] count;
+	
+	always@(posedge clk)
+	begin
+		if (trans_en) count <= count + 1'b1;
+		if (count == 4'b1111)
+		begin
+			assign bsc_clock = 1'b1;
+			count <= 4'b0000;
+		end
+		else assign bsc_clock = 1'b0;
+	
+endmodule 

@@ -1,0 +1,6 @@
+module triStateDriver(out, in, en);
+	output out;
+	input in, en;
+	
+	assign out = en ? in : 1'bz;
+endmodule

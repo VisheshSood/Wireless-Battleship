@@ -1,0 +1,25 @@
+[*]
+[*] GTKWave Analyzer v3.3.66 (w)1999-2015 BSI
+[*] Tue Feb 16 19:46:15 2016
+[*]
+[dumpfile] "C:\Users\suhdavid\Desktop\Lab4\iverilog\bic.vcd"
+[dumpfile_mtime] "Tue Feb 16 19:45:00 2016"
+[dumpfile_size] 812
+[savefile] "C:\Users\suhdavid\Desktop\Lab4\iverilog\bicTestbench.gtkw"
+[timestart] 0
+[size] 1000 600
+[pos] -1 -1
+*-8.000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] bicTestBench.
+[sst_width] 197
+[signals_width] 126
+[sst_expanded] 1
+[sst_vpaned_height] 153
+@22
+bicTestBench.dut.count[3:0]
+@28
+bicTestBench.dut.seq_complete
+bicTestBench.dut.sr_clock
+bicTestBench.dut.trans_en
+[pattern_trace] 1
+[pattern_trace] 0

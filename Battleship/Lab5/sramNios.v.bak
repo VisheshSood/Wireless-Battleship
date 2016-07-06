@@ -1,0 +1,19 @@
+module sramNios (CLOCK_50, LEDR, SW, KEY);
+	input CLOCK_50; // 50MHz clock.
+	output [9:0] LEDR;
+	input [9:0] SW;
+	input [3:0] KEY;
+	
+    nios_system u0 (
+        .clk_clk           (<connected-to-clk_clk>),           //        clk.clk
+        .leds_export       (<connected-to-leds_export>),       //       leds.export
+        .reset_reset_n     (<connected-to-reset_reset_n>),     //      reset.reset_n
+        .data_export       (<connected-to-data_export>),       //       data.export
+        .address_export    (<connected-to-address_export>),    //    address.export
+        .chipreset_export  (<connected-to-chipreset_export>),  //  chipreset.export
+        .readnwrite_export (<connected-to-readnwrite_export>), // readnwrite.export
+        .notouten_export   (<connected-to-notouten_export>)    //   notouten.export
+    );
+
+
+endmodule

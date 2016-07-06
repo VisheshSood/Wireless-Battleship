@@ -1,0 +1,31 @@
+
+**** Build of configuration Nios II for project sRamEclipse2 ****
+
+make all 
+      0 [main] sh 23368 find_fast_cwd: WARNING: Couldn't compute FAST_CWD pointer.  Please report this problem to
+the public mailing list cygwin@cygwin.com
+      0 [main] echo 6560 find_fast_cwd: WARNING: Couldn't compute FAST_CWD pointer.  Please report this problem to
+the public mailing list cygwin@cygwin.com
+Info: Building ../sRamEclipse_bsp/
+make --no-print-directory -C ../sRamEclipse_bsp/
+      0 [main] pwd 15148 find_fast_cwd: WARNING: Couldn't compute FAST_CWD pointer.  Please report this problem to
+the public mailing list cygwin@cygwin.com
+      0 [main] sh 19968 find_fast_cwd: WARNING: Couldn't compute FAST_CWD pointer.  Please report this problem to
+the public mailing list cygwin@cygwin.com
+      0 [main] sh 20708 find_fast_cwd: WARNING: Couldn't compute FAST_CWD pointer.  Please report this problem to
+the public mailing list cygwin@cygwin.com
+[BSP build complete]
+      0 [main] true 19268 find_fast_cwd: WARNING: Couldn't compute FAST_CWD pointer.  Please report this problem to
+the public mailing list cygwin@cygwin.com
+      0 [main] echo 12372 find_fast_cwd: WARNING: Couldn't compute FAST_CWD pointer.  Please report this problem to
+the public mailing list cygwin@cygwin.com
+Info: Linking sRamEclipse2.elf
+nios2-elf-g++  -T'../sRamEclipse_bsp//linker.x' -msys-crt0='../sRamEclipse_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../sRamEclipse_bsp/   -Wl,-Map=sRamEclipse2.map   -O0 -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx  -o sRamEclipse2.elf  -lm 
+c:/altera/14.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.7.3/../../../../../H-x86_64-mingw32/nios2-elf/bin/ld.exe: address 0xd500 of sRamEclipse2.elf section `.bss' is not within region `onchip_mem'
+c:/altera/14.0/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/4.7.3/../../../../../H-x86_64-mingw32/nios2-elf/bin/ld.exe: address 0xd500 of sRamEclipse2.elf section `.bss' is not within region `onchip_mem'
+../sRamEclipse_bsp/\libhal_bsp.a(alt_main.o): In function `alt_main':
+C:\Users\Justin\Documents\EE371\LAB3\sRamNios\software\sRamEclipse_bsp/HAL/src/alt_main.c:154: undefined reference to `main'
+collect2.exe: error: ld returned 1 exit status
+make: *** [sRamEclipse2.elf] Error 1
+
+**** Build Finished ****

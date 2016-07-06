@@ -1,0 +1,17 @@
+Partition Merge Status : Successful - Mon Feb 22 17:15:17 2016
+Quartus Prime Version : 15.1.1 Build 189 12/02/2015 SJ Lite Edition
+Revision Name : Serial_IOTop
+Top-level Entity Name : Serial_IOTop
+Family : Cyclone V
+Logic utilization (in ALMs) : N/A
+Total registers : 1991
+Total pins : 24
+Total virtual pins : 0
+Total block memory bits : 356,416
+Total DSP Blocks : 0
+Total HSSI RX PCSs : 0
+Total HSSI PMA RX Deserializers : 0
+Total HSSI TX PCSs : 0
+Total HSSI PMA TX Serializers : 0
+Total PLLs : 0
+Total DLLs : 0

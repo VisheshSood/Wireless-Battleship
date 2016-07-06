@@ -1,0 +1,156 @@
+char inputBuffer[]
+char outputBuffer[]
+int validMove
+int yourShotX
+int yourShotY
+int theirShotX
+int theirShotY
+int enemyHits = 0;
+int yourHits = 0;
+
+#define shotsBase 0;
+#define hitsBase 8;
+#define boardBase 16;
+
+// shots board, hits board (-, X, 0)
+// your boats board (-, B)
+
+void main {
+	setUpBoats()
+	ask if going first, set yourTurn 1 or 0
+	while(!gameOver) {
+ 		if (yourTurn) {
+			while (!validMove) {
+				enterString()
+				translateOutputBuffer()
+				checkMove()
+			}
+			sendString()
+			readString()	
+			updateShots(indices)
+			if (hit) 
+				updateHits(index)
+			printEnemyBoard()
+			yourTurn = 0
+		} else {
+			readString()
+			translateInputBuffer()
+			updateYourBoard()
+			sendString()
+			yourTurn = 1
+		}
+	}
+}
+
+void setUpBoats() {
+	for (i from 3 to 1) {
+		(while check conditions not met)
+			print "please choose coords for length i ship"
+			enterString()
+			translateOutputBuffer()
+			print "please choose orientation (v or h)"
+			for (each bit in ship)
+				check if bit is not off the board space and does not already have a ship at it
+				addShipBit(x, y)
+	}
+}
+
+void addShipBit(int x, int y) {
+	c = readSRAM(y + boardBase)
+	writeSRAM(y + boardBase, c + createByte(x))
+}
+
+void translateInputBuffer() {
+	assign theirShotX and theirShotY according to input buffer
+}
+
+void translateOutputBuffer() {
+	assign yourShotX and yourShotY according to output buffer
+}
+
+updateYourBoard() {
+	char c = readSRAM(address)
+	if index they are attempting to hit has a ship {
+		print "enemy got a hit"
+		writeSRAM(address, new byte with zero where there was a one)
+		increment enemyHits++
+		set outputBuffer to 1 followed by null terminator // returning this to other player
+	} else {
+		print "enemy has missed"
+		set outputBuffer to 0 followed by null terminator // going to return this to other player
+	}
+}
+
+void updateHits() {
+	writeSRAM(address, byte) = new byte indicating hit
+	hits++
+}
+
+void printEnemyBoard() {
+	sequentially go through SRAM indices for hits and shots
+	assign temporary chars (1 byte) to SRAM bytes
+	if index has both shot and hit, print "X"
+	if index has only shot, "O"
+	else print "-"
+}
+
+void readString() {
+	char received;
+	while (received != '\0')
+		if (char received)
+			read input
+			check parity of input
+			add input to inputBuffer
+}
+
+void enterString() {
+	char c = alt_getchar()
+	while (c not newline)
+		put c in outputBuffer
+		c = alt_getchar()
+	put null terminator at end of string in outputBuffer
+}
+
+void sendString() {
+	for (i < length of output buffer) {
+		if (outputBuffer[i] == '\0') {
+			sendChar(outputBuffer[i])
+			break
+		} else {
+			sendChar(outputBuffer[i])
+		}
+	}
+}
+
+void sendChar(char c) {
+	(normal sending procedure for one character)
+	usleep(100);
+}
+
+char computeParity(char c) {
+	return parity of c
+}
+
+void checkMove() {
+	checkIndex(yourShotX, yourShotY)
+	check that move has not been previously made
+	set validMove
+}
+
+char createByte(int column) {
+	char c = 1
+	c = c << column
+	return c
+}
+
+int checkIndex(int x, int y) {
+	return 0 if index is within board range, otherwise return 1
+}
+
+byte readSRAM(address) {
+
+}
+
+void writeSRAM(address, byte) {
+	
+}

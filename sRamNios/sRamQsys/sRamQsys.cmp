@@ -1,0 +1,14 @@
+	component sRamQsys is
+		port (
+			address_pio_external_connection_export    : out std_logic_vector(10 downto 0);                    -- export
+			chipselect_pio_external_connection_export : out std_logic;                                        -- export
+			clk_clk                                   : in  std_logic                     := 'X';             -- clk
+			datain_export                             : in  std_logic_vector(7 downto 0)  := (others => 'X'); -- export
+			dataout_export                            : out std_logic_vector(7 downto 0);                     -- export
+			enable_pio_external_connection_export     : out std_logic;                                        -- export
+			led_pio_external_connection_export        : out std_logic_vector(7 downto 0);                     -- export
+			readnwrite_pio_external_connection_export : out std_logic;                                        -- export
+			reset_reset_n                             : in  std_logic                     := 'X'              -- reset_n
+		);
+	end component sRamQsys;
+

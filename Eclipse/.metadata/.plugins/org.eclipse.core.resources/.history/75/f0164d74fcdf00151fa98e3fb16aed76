@@ -1,0 +1,71 @@
+/**
+ * main.c
+ * This file is a test of our SRAM implementation.
+ */
+
+#include "sys/alt_stdio.h"
+#include "altera_avalon_pio_regs.h"
+#include <stdio.h>
+#include <string.h>
+
+// Define NIOS I/O addresses
+#define DATA 		0x00011020
+#define WRITEENABLE 0x00011030
+#define ADDRESS 	0x00011040
+#define CHIPSELECT 	0x00011050
+#define OUTENABLE 	0x00011060
+#define LEDS	 	0x00011070
+
+void udelay(int n);
+
+void main() {
+
+	while (1) {
+		// Print 'a' to 'z' on LEDs and repeat indefinitely
+		int i;
+		for (i = 0; i < 26; i++) {
+			// Load data into SRAM
+			unsigned int addr = 4;
+			char send = i + 'a';
+			IOWR_ALTERA_AVALON_PIO_DATA(ADDRESS, addr);
+			IOWR_ALTERA_AVALON_PIO_DATA(DATA, send);
+			udelay(10);
+			IOWR_ALTERA_AVALON_PIO_DATA(WRITEENABLE, 1);
+			udelay(10);
+			IOWR_ALTERA_AVALON_PIO_DATA(WRITEENABLE, 0);
+			udelay(10);
+
+			// Display on console
+			alt_putstr("Send: ");
+			alt_putchar(send);
+			alt_putchar('\n');
+
+			// Read data from SRAM and display on LEDs
+			udelay(10);
+			IOWR_ALTERA_AVALON_PIO_DATA(OUTENABLE, 1);
+			udelay(10);
+			alt_u8 data = (alt_u8) IORD_ALTERA_AVALON_PIO_DATA(DATA);
+			udelay(10);
+			IOWR_ALTERA_AVALON_PIO_DATA(OUTENABLE, 0);
+			udelay(10);
+			IOWR_ALTERA_AVALON_PIO_DATA(LEDS, (alt_u8) data);
+
+			// Display on console
+			alt_putstr("Data: ");
+			alt_putchar(data);
+			alt_putchar('\n');
+
+			udelay(100);
+		}
+	}
+}
+
+void udelay(int n) {
+	int i;
+	int count = 0;
+	for (i = 0; i < n; i++) {
+		int j;
+		for (j = 0; j < 10; j++)
+			count++;
+	}
+}

@@ -1,0 +1,14 @@
+module PISOSR10bit (bit_out, load, sr_clock, data, clock16x);
+	input sr_clock, load, clock16x;
+	input [7:0] data;
+	output bit_out;
+	
+	reg [9:0] buffer;
+	
+	assign bit_out = buffer[9];
+	
+	always @(posedge sr_clock || posedge load) 
+		if (load) buffer <= {0, data, 1};
+		else buffer < = {buffer[8:0], 1'b0}; // shift out
+
+endmodule

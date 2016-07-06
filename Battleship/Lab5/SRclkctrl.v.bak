@@ -1,0 +1,11 @@
+module SRclkctrl(SIPOclk, clk);
+	input clk;
+	output SIPOclk = 1'b0;
+	reg [2:0] count = 3'b0;
+	
+	always @(posedge clk)
+		if (count == 3'b111) begin
+			SIPOclk = ~SIPOclk;
+		end
+		count = count + 1'b1;
+endmodule

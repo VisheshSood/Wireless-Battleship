@@ -1,0 +1,17 @@
+Partition Merge Status : Successful - Mon Feb 22 14:31:11 2016
+Quartus Prime Version : 15.1.1 Build 189 12/02/2015 SJ Standard Edition
+Revision Name : lights
+Top-level Entity Name : communications
+Family : Cyclone V
+Logic utilization (in ALMs) : N/A
+Total registers : 1015
+Total pins : 17
+Total virtual pins : 0
+Total block memory bits : 44,032
+Total DSP Blocks : 0
+Total HSSI RX PCSs : 0
+Total HSSI PMA RX Deserializers : 0
+Total HSSI TX PCSs : 0
+Total HSSI PMA TX Serializers : 0
+Total PLLs : 0
+Total DLLs : 0
